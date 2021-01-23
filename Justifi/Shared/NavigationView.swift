@@ -15,7 +15,7 @@ struct NavigationView: View {
                 Image(systemName: "house")
                 Text("Home")
             }
-            Text("Upload Page").tabItem {
+            RecorderView().tabItem {
                 Image(systemName: "plus.app.fill")
                 Text("Upload")
             }
