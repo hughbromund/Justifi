@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,8 +13,12 @@
 		1E9C379C25BBC17900C7F262 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C378725BBC17800C7F262 /* ContentView.swift */; };
 		1E9C379D25BBC17900C7F262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E9C378825BBC17900C7F262 /* Assets.xcassets */; };
 		1E9C379E25BBC17900C7F262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E9C378825BBC17900C7F262 /* Assets.xcassets */; };
-		1E9C37AA25BBC5F300C7F262 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37A925BBC5F300C7F262 /* Home.swift */; };
-		1E9C37AB25BBC5F300C7F262 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37A925BBC5F300C7F262 /* Home.swift */; };
+		1E9C37B225BC76F400C7F262 /* SwiftUIPager in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37B125BC76F400C7F262 /* SwiftUIPager */; };
+		1E9C37B625BC771F00C7F262 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37B525BC771F00C7F262 /* ScrollView.swift */; };
+		1E9C37B725BC771F00C7F262 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37B525BC771F00C7F262 /* ScrollView.swift */; };
+		1E9C37BB25BC7DDD00C7F262 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37BA25BC7DDD00C7F262 /* VideoView.swift */; };
+		1E9C37BC25BC7DDD00C7F262 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37BA25BC7DDD00C7F262 /* VideoView.swift */; };
+		1E9C37C325BCA69F00C7F262 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37C225BCA69F00C7F262 /* URLImage */; };
 		42CFEADE25BBDCAC0040C1B4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */; };
 		42CFEADF25BBDCAC0040C1B4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */; };
 		42CFEAE325BBE7C80040C1B4 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEAE225BBE7C80040C1B4 /* RecordView.swift */; };
@@ -30,11 +34,10 @@
 		1E9C379525BBC17900C7F262 /* Justifi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Justifi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E9C379725BBC17900C7F262 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E9C379825BBC17900C7F262 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
-
-		1E9C37A925BBC5F300C7F262 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		1E9C37B525BC771F00C7F262 /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
+		1E9C37BA25BC7DDD00C7F262 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		42CFEAE225BBE7C80040C1B4 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E9C37C325BCA69F00C7F262 /* URLImage in Frameworks */,
+				1E9C37B225BC76F400C7F262 /* SwiftUIPager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +75,8 @@
 			children = (
 				1E9C378625BBC17800C7F262 /* JustifiApp.swift */,
 				1E9C378725BBC17800C7F262 /* ContentView.swift */,
-				1E9C37A925BBC5F300C7F262 /* Home.swift */,
+				1E9C37BA25BC7DDD00C7F262 /* VideoView.swift */,
+				1E9C37B525BC771F00C7F262 /* ScrollView.swift */,
 				1E9C378825BBC17900C7F262 /* Assets.xcassets */,
 				42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */,
 				42CFEAE225BBE7C80040C1B4 /* RecordView.swift */,
@@ -120,6 +126,10 @@
 			dependencies = (
 			);
 			name = "Justifi (iOS)";
+			packageProductDependencies = (
+				1E9C37B125BC76F400C7F262 /* SwiftUIPager */,
+				1E9C37C225BCA69F00C7F262 /* URLImage */,
+			);
 			productName = "Justifi (iOS)";
 			productReference = 1E9C378D25BBC17900C7F262 /* Justifi.app */;
 			productType = "com.apple.product-type.application";
@@ -167,6 +177,10 @@
 				Base,
 			);
 			mainGroup = 1E9C378025BBC17800C7F262;
+			packageReferences = (
+				1E9C37B025BC76F400C7F262 /* XCRemoteSwiftPackageReference "SwiftUIPager" */,
+				1E9C37C125BCA69F00C7F262 /* XCRemoteSwiftPackageReference "url-image" */,
+			);
 			productRefGroup = 1E9C378E25BBC17900C7F262 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -202,10 +216,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				42CFEADE25BBDCAC0040C1B4 /* LoginView.swift in Sources */,
+				1E9C37BB25BC7DDD00C7F262 /* VideoView.swift in Sources */,
 				1E9C379B25BBC17900C7F262 /* ContentView.swift in Sources */,
-				1E9C37AA25BBC5F300C7F262 /* Home.swift in Sources */,
 				42CFEAE325BBE7C80040C1B4 /* RecordView.swift in Sources */,
 				1E9C379925BBC17900C7F262 /* JustifiApp.swift in Sources */,
+				1E9C37B625BC771F00C7F262 /* ScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,10 +229,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				42CFEADF25BBDCAC0040C1B4 /* LoginView.swift in Sources */,
+				1E9C37BC25BC7DDD00C7F262 /* VideoView.swift in Sources */,
 				1E9C379C25BBC17900C7F262 /* ContentView.swift in Sources */,
-				1E9C37AB25BBC5F300C7F262 /* Home.swift in Sources */,
 				42CFEAE425BBE7C80040C1B4 /* RecordView.swift in Sources */,
 				1E9C379A25BBC17900C7F262 /* JustifiApp.swift in Sources */,
+				1E9C37B725BC771F00C7F262 /* ScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +475,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1E9C37B025BC76F400C7F262 /* XCRemoteSwiftPackageReference "SwiftUIPager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fermoya/SwiftUIPager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		1E9C37C125BCA69F00C7F262 /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1E9C37B125BC76F400C7F262 /* SwiftUIPager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E9C37B025BC76F400C7F262 /* XCRemoteSwiftPackageReference "SwiftUIPager" */;
+			productName = SwiftUIPager;
+		};
+		1E9C37C225BCA69F00C7F262 /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E9C37C125BCA69F00C7F262 /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1E9C378125BBC17800C7F262 /* Project object */;
 }

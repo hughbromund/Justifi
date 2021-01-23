@@ -1,19 +1,13 @@
 //
-//  Home.swift
+//  VideoView.swift
 //  Justifi
 //
-//  Created by Hugh Bromund on 1/22/21.
+//  Created by Hugh Bromund on 1/23/21.
 //
 
 import SwiftUI
 import AVKit
-
-//player = AVQueuePlayer()
-//playerLayer = AVPlayerLayer(player: player)
-//playerItem = AVPlayerItem(url: videoURL)
-//playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
-//player.play()
-
+import URLImage
 
 class PlayerUIView: UIView {
     private var playerLayer = AVPlayerLayer()
@@ -27,6 +21,7 @@ class PlayerUIView: UIView {
         player.play()
         // playerLayer.player = player
         layer.addSublayer(playerLayer)
+        // layer.frame = UIScreen.main.bounds
         // print("Here")
         
     }
@@ -38,15 +33,28 @@ class PlayerUIView: UIView {
         playerLayer.frame = bounds
   }}
 
-struct Home: View {
-    
+struct VideoView: View {
+    var pageNum: Int
     @State private var isPaused = false
-    
     @State private var  player: AVQueuePlayer = AVQueuePlayer()
     
+//    static func == (lhs: VideoView, rhs: VideoView) -> Bool {
+//        return ((lhs.pageNum - rhs.pageNum) != 0)
+//    }
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(pageNum)
+//        // hasher.combine(command)
+//    }
+
+    
     var body: some View {
-        ZStack{
             ZStack {
+                URLImage(url: URL(string: "https://videodelivery.net/82c13a0dcd68d1cd052be636abc0199a/thumbnails/thumbnail.jpg")!,
+                         content: { image in
+                             image
+                                 .resizable()
+                                 .aspectRatio(contentMode: .fit)
+                         })
                 PlayerContainerView(player: player, url: "https://videodelivery.net/82c13a0dcd68d1cd052be636abc0199a/manifest/video.m3u8").onTapGesture {
                         print("Tapping Video // Video is \(isPaused)")
                         if (isPaused) {
@@ -64,6 +72,8 @@ struct Home: View {
                         .frame(width: 50, height: 50)
                         .font(Font.system(.largeTitle).bold())
                 }
+            }.onAppear {
+                print("Page \(pageNum) appeared")
             }
 //            VStack {
 //                HStack {
@@ -73,7 +83,6 @@ struct Home: View {
 //                Spacer()
 //            }
            
-        }
     }
 }
 
@@ -108,8 +117,8 @@ struct PlayerView: UIViewRepresentable {
     }
 }
 
-struct Home_Previews: PreviewProvider {
+struct VideoView_Previews: PreviewProvider {
     static var previews: some View {
-        Home()
+        VideoView(pageNum: 1)
     }
 }
