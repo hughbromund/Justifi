@@ -6,11 +6,11 @@ var VideoService = require(path.resolve(
 ))
 
 exports.getNextVideo = async function (req, res, next) {
-    let result = await VideoService.getNextVideoStub(req);
-    res.status(result.status).json(result);
+    let result = await VideoService.getNextVideo(req);
+    res.status(200).json(result);
 }
 
 exports.uploadVideo = async function (req, res, next) {
     let result = await VideoService.uploadVideoStub(req);
-    res.status(result.status).json(result);
+    res.status(200).json(result);
 }
