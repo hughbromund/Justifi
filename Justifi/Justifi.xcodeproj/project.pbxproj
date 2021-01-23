@@ -24,6 +24,8 @@
 		1E9C37CC25BCB1C700C7F262 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37CB25BCB1C700C7F262 /* RecorderView.swift */; };
 		1E9C37CD25BCB1C700C7F262 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37CB25BCB1C700C7F262 /* RecorderView.swift */; };
 		1E9C37D925BCB4B800C7F262 /* CameraManager in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37D825BCB4B800C7F262 /* CameraManager */; };
+		1E9C37DE25BCE39800C7F262 /* Json in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37DD25BCE39800C7F262 /* Json */; };
+		1E9C37E025BCE39800C7F262 /* Request in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37DF25BCE39800C7F262 /* Request */; };
 		42CFEADE25BBDCAC0040C1B4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */; };
 		42CFEADF25BBDCAC0040C1B4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */; };
 		42CFEAE325BBE7C80040C1B4 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEAE225BBE7C80040C1B4 /* RecordView.swift */; };
@@ -53,7 +55,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E9C37C325BCA69F00C7F262 /* URLImage in Frameworks */,
+				1E9C37E025BCE39800C7F262 /* Request in Frameworks */,
 				1E9C37D925BCB4B800C7F262 /* CameraManager in Frameworks */,
+				1E9C37DE25BCE39800C7F262 /* Json in Frameworks */,
 				1E9C37B225BC76F400C7F262 /* SwiftUIPager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +144,8 @@
 				1E9C37B125BC76F400C7F262 /* SwiftUIPager */,
 				1E9C37C225BCA69F00C7F262 /* URLImage */,
 				1E9C37D825BCB4B800C7F262 /* CameraManager */,
+				1E9C37DD25BCE39800C7F262 /* Json */,
+				1E9C37DF25BCE39800C7F262 /* Request */,
 			);
 			productName = "Justifi (iOS)";
 			productReference = 1E9C378D25BBC17900C7F262 /* Justifi.app */;
@@ -192,6 +198,7 @@
 				1E9C37B025BC76F400C7F262 /* XCRemoteSwiftPackageReference "SwiftUIPager" */,
 				1E9C37C125BCA69F00C7F262 /* XCRemoteSwiftPackageReference "url-image" */,
 				1E9C37D725BCB4B800C7F262 /* XCRemoteSwiftPackageReference "CameraManager" */,
+				1E9C37DC25BCE39700C7F262 /* XCRemoteSwiftPackageReference "swift-request" */,
 			);
 			productRefGroup = 1E9C378E25BBC17900C7F262 /* Products */;
 			projectDirPath = "";
@@ -517,6 +524,14 @@
 				minimumVersion = 5.1.3;
 			};
 		};
+		1E9C37DC25BCE39700C7F262 /* XCRemoteSwiftPackageReference "swift-request" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/carson-katri/swift-request";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -534,6 +549,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1E9C37D725BCB4B800C7F262 /* XCRemoteSwiftPackageReference "CameraManager" */;
 			productName = CameraManager;
+		};
+		1E9C37DD25BCE39800C7F262 /* Json */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E9C37DC25BCE39700C7F262 /* XCRemoteSwiftPackageReference "swift-request" */;
+			productName = Json;
+		};
+		1E9C37DF25BCE39800C7F262 /* Request */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E9C37DC25BCE39700C7F262 /* XCRemoteSwiftPackageReference "swift-request" */;
+			productName = Request;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

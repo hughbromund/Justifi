@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Request",
+        "repositoryURL": "https://github.com/carson-katri/swift-request",
+        "state": {
+          "branch": null,
+          "revision": "1b4493f01e4d968ab17ed5e17a91a117a22d636f",
+          "version": "1.3.0"
+        }
+      },
+      {
         "package": "SwiftUIPager",
         "repositoryURL": "https://github.com/fermoya/SwiftUIPager.git",
         "state": {
