@@ -1,5 +1,6 @@
 const path = require("path");
 const got = require("got");
+const { user } = require("../Database");
 const config = require(path.resolve(__dirname, "../config.json"));
 
 const Videos = require(path.resolve(__dirname, "../Database/Models/Videos"));
@@ -20,7 +21,7 @@ exports.getResponseVideoStub = async function (req) {
 
 
 exports.getNextVideo = async function (req) {
-    let user = await Users.findOne({username: req.userId})
+    let user = await Users.findOne({_id: req.userId})
     //let videos = await Videos.find({"uid" : { "$in" : user.feed}})
 
     var query = [
@@ -84,7 +85,8 @@ exports.getUploadVideoURL = async function (req) {
 }
 
 exports.uploadVideoData = async function (req) {
-    const {uid, url, thumbnail, title, username, isOriginal, origUID} = req.body
+    const {uid, url, thumbnail, title, isOriginal, origUID} = req.body
+    let user = await Users.findOne({_id: req.userId})
     const video = new Videos({
         uid: uid,
         url: url,
@@ -92,12 +94,12 @@ exports.uploadVideoData = async function (req) {
         title: title,
         date: new Date(Date.now()).toISOString(),
         upvotes: 1,
-        username: username,
+        username: user.username,
         isOriginal: isOriginal,
         responsesUID: []
     })
 
-    user.save((err, user) => {
+    video.save((err, user) => {
         if (err) {
           //res.status(500).send({ message: err });
           return;
@@ -115,4 +117,32 @@ exports.uploadVideoData = async function (req) {
     }
 
     return { message: "Video information saved successfully!" };
+}
+
+exports.likeVideo = async function (req) {
+    const {uid} = req.body;
+    let video = await Videos.findOne({uid: uid})
+    let user = await Users.findOne({_id: req.userId})
+    let category = "interests." + video.tag
+
+    let userUpdate = await Users.updateOne({username: user.username}, {"$inc": {numUpvotes: 1, [category]: 1}})
+    let vidUpdate = await Videos.updateOne({uid: uid}, {"$inc": {upvotes: 1}})
+
+    return { message: "Upvote Successful"};
+}
+
+exports.unlikeVideo = async function (req) {
+    const {uid} = req.body;
+    let video = await Videos.findOne({uid: uid})
+    let user = await Users.findOne({_id: req.userId})
+    let category = "interests." + video.tag
+
+    let userUpdate = await Users.updateOne({username: user.username}, {"$inc": {numUpvotes: -1, [category]: -1}})
+    let vidUpdate = await Videos.updateOne({uid: uid}, {"$inc": {upvotes: -1}})
+
+    return { message: "Upvote Successful"};
+}
+
+exports.calculateVideoList = async function (req) {
+    
 }

@@ -24,3 +24,13 @@ exports.uploadVideoData = async function (req, res, next) {
     let result = await VideoService.uploadVideoData(req);
     res.status(200).json(result);
 }
+
+exports.likeVideo = async function (req, res, next) {
+    let result = await VideoService.likeVideo(req);
+    res.status(200).json(result);
+}
+
+exports.unlikeVideo = async function (req, res, next) {
+    let result = await VideoService.unlikeVideo(req);
+    res.status(200).json(result);
+}

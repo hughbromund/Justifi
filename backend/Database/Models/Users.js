@@ -36,6 +36,7 @@ const usersSchema = new Schema({
         shopping: { type: Number, unique: false, default: 0, required: true},
         sports: { type: Number, unique: false, default: 0, required: true},
         travel: { type: Number, unique: false, default: 0, required: true},
+        other: { type: Number, unique: false, default: 0, required: true},
     }
 }, { collection: "Users"})
 
