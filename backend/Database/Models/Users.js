@@ -6,10 +6,11 @@ mongoose.promise = Promise
 const usersSchema = new Schema({
     username: { type: String, unique: true, required: true},
     password: { type: String, unique: false, required: true},
+    feed: {type: Array, unique: false, default: [], required: false},
 }, { collection: "Users"})
 
 // Define schema methods
-budgetSchema.methods = {}
+usersSchema.methods = {}
 
 
 const Users = mongoose.model('Users', usersSchema)

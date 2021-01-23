@@ -6,10 +6,13 @@ mongoose.promise = Promise
 const videosSchema = new Schema({
     uid: { type: String, unique: true, required: true},
     url: { type: String, unique: true, required: true},
+    thumbnail: { type: String, unique: true, required: true},
+    title: {type: String, unique: false, required: true},
     username: { type: String, unique: false, required: true},
-    upvotes: { type: Number, unique: false, required: false}
-    responsesUID: { type: Array, default: [], unique: false, required: false}
-    isOriginal: { type: Boolean, default: true, unique: false, required: true}
+    upvotes: { type: Number, unique: false, required: false},
+    date: {type: Date, unique: false, required: true},
+    responsesUID: { type: Array, default: [], unique: false, required: false},
+    isOriginal: { type: Boolean, default: true, unique: false, required: true},
 }, { collection: "Videos"})
 
 // Define schema methods

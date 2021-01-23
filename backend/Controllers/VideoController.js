@@ -10,6 +10,11 @@ exports.getNextVideo = async function (req, res, next) {
     res.status(200).json(result);
 }
 
+exports.getResponseVideo = async function (req, res, next) {
+    let result = await VideoService.getResponseVideoStub(req);
+    res.status(200).json(result);
+}
+
 exports.uploadVideo = async function (req, res, next) {
     let result = await VideoService.uploadVideoStub(req);
     res.status(200).json(result);
