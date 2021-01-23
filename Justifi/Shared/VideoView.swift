@@ -74,15 +74,13 @@ struct VideoView: View {
                 }
             }.onAppear {
                 print("Page \(pageNum) appeared")
+                if (!isPaused) {
+                    player.play()
+                }
+            }.onDisappear {
+                print("Page \(pageNum) disappeared")
+                player.pause()
             }
-//            VStack {
-//                HStack {
-//                    Text("Justifi").font(.largeTitle).bold().padding()
-//                    Spacer()
-//                }
-//                Spacer()
-//            }
-           
     }
 }
 

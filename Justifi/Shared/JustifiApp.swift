@@ -11,7 +11,7 @@ import SwiftUI
 struct JustifiApp: App {
     var body: some Scene {
         WindowGroup {
-            ScrollView()
+            NavigationView()
         }
     }
 }
