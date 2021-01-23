@@ -22,10 +22,12 @@ const userController = require(path.resolve(
     "../Controllers/UserController"
 ))
 
+router.post("api/video/calclist", authJwt.verifyToken, )
 router.get("/api/video/list", authJwt.verifyToken, videoController.getNextVideo);
 router.get("/api/video/response/:prevpostuid", authJwt.verifyToken, videoController.getResponseVideo);
 
-router.get("/api/video/upload", authJwt.verifyToken, videoController.uploadVideo);
+router.get("/api/video/uploadURL", authJwt.verifyToken, videoController.uploadVideoURL);
+router.post("/api/video/uploadData", authJwt.verifyToken, videoController.uploadVideoData)
 
 router.post("/api/auth/signup", verifySignUp.checkDuplicateUsername, userController.signup);
 router.post("/api/auth/login", userController.login);
