@@ -13,6 +13,8 @@
 		1E9C379C25BBC17900C7F262 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C378725BBC17800C7F262 /* ContentView.swift */; };
 		1E9C379D25BBC17900C7F262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E9C378825BBC17900C7F262 /* Assets.xcassets */; };
 		1E9C379E25BBC17900C7F262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E9C378825BBC17900C7F262 /* Assets.xcassets */; };
+		1E9C37AA25BBC5F300C7F262 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37A925BBC5F300C7F262 /* Home.swift */; };
+		1E9C37AB25BBC5F300C7F262 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37A925BBC5F300C7F262 /* Home.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,7 @@
 		1E9C379525BBC17900C7F262 /* Justifi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Justifi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E9C379725BBC17900C7F262 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E9C379825BBC17900C7F262 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		1E9C37A925BBC5F300C7F262 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +62,7 @@
 			children = (
 				1E9C378625BBC17800C7F262 /* JustifiApp.swift */,
 				1E9C378725BBC17800C7F262 /* ContentView.swift */,
+				1E9C37A925BBC5F300C7F262 /* Home.swift */,
 				1E9C378825BBC17900C7F262 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -188,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E9C379B25BBC17900C7F262 /* ContentView.swift in Sources */,
+				1E9C37AA25BBC5F300C7F262 /* Home.swift in Sources */,
 				1E9C379925BBC17900C7F262 /* JustifiApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E9C379C25BBC17900C7F262 /* ContentView.swift in Sources */,
+				1E9C37AB25BBC5F300C7F262 /* Home.swift in Sources */,
 				1E9C379A25BBC17900C7F262 /* JustifiApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
