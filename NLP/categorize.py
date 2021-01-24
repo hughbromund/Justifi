@@ -52,6 +52,8 @@ def get_vid_cat(video_url, id):
         full_transcript = full_transcript + \
             result.alternatives[0].transcript + "."
 
+    print("TRANSCRIPT: " + full_transcript)
+
     """Classify the input text into categories. """
 
     language_client = language_v1.LanguageServiceClient()
@@ -121,5 +123,6 @@ def post_categorize(request):
 
     return get_vid_cat(video_url=url, id=uid)
 
-# get_vid_cat(video_url="https://videodelivery.net/1373d5002893cfb3c92e3608d23125f6/manifest/video.m3u8",
-#             id="1373d5002893cfb3c92e3608d23125f6")
+
+get_vid_cat(video_url="https://videodelivery.net/1c7f1bd30c1347bbaf48cf3ac5cc79d3/manifest/video.m3u8",
+            id="1c7f1bd30c1347bbaf48cf3ac5cc79d3")

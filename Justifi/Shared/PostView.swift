@@ -91,10 +91,28 @@ struct PostView: View {
                         AF.upload(multipartFormData: { multipartFormData in
                             multipartFormData.append(postURL, withName: "file")
                         }, to: uploadURL, method: .post).response { result in
-                            print(result)
-                            isUploading = false
-                            isSuccess = true
-                        }
+                            print(Json(result))
+                            
+                            Request {
+                                Url("https://justifi.uc.r.appspot.com/api/video/uploadData")
+                                Method(.post)
+                                Header.Any(key: "x-access-token", value: accessToken)
+                                Header.ContentType(.json)
+                                RequestBody([
+                                    "uid": uploadUID,
+                                    "title": postTitle,
+                                    "isOriginal": true,
+                                    "origUID": "none"
+                                ])
+                            }.onData { data in
+                                print("Success")
+                                isUploading = false
+                                isSuccess = true
+                            }.onError{ error in
+                                print(error)
+                                isUploading = false
+                            }.call()
+                        }         
                     } catch {
                         isUploading = false
                         print("Error")

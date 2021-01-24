@@ -85,6 +85,7 @@ struct RecorderView: View {
             cameraManager?.shouldEnableTapToFocus = false
             cameraManager?.shouldEnablePinchToZoom = false
             cameraManager?.shouldEnableExposure = false
+            cameraManager?.cameraOutputQuality = .high
             // self.cameraManager?.startRecordingVideo()
             //print(self.cameraManager?.currentCameraStatus())
             if (!firstLoad) {

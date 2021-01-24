@@ -34,7 +34,8 @@ class PlayerUIView: UIView {
   }}
 
 struct VideoView: View {
-    var pageNum: Int
+    var pageNum : Int
+    // @Binding var videoURL : URL
     @State private var isPaused = false
     @State private var  player: AVQueuePlayer = AVQueuePlayer()
     
@@ -73,12 +74,12 @@ struct VideoView: View {
                         .font(Font.system(.largeTitle).bold())
                 }
             }.onAppear {
-                print("Page \(pageNum) appeared")
+                
                 if (!isPaused) {
                     player.play()
                 }
             }.onDisappear {
-                print("Page \(pageNum) disappeared")
+               
                 player.pause()
             }
     }

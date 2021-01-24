@@ -15,7 +15,7 @@ struct NavigationView: View {
     
     var body: some View {
         TabView() {
-            ScrollView().tabItem {
+            ScrollView(accessToken: $accessToken).tabItem {
                 Image(systemName: "house")
                 Text("Home")
             }
