@@ -1,5 +1,6 @@
 const path = require("path");
 const Users = require(path.resolve(__dirname, "../Database/Models/Users"));
+const Emails = require(path.resolve(__dirname, "../Database/Models/Emails"));
 const config = require(path.resolve(__dirname, "../config.json"));
 
 var jwt = require("jsonwebtoken");
@@ -58,3 +59,19 @@ exports.login = (req, res) => {
       });
     });
 };
+
+exports.emailSignup = async function (req, res) {
+  const email = new Emails({
+    email: req.body.email,
+    first: req.body.first,
+    last: req.body.last
+  });
+
+  email.save((err, acc) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.send({ message: "Email was saved successfully!" });
+  });
+}

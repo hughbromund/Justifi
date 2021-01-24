@@ -36,4 +36,6 @@ router.get("/api/video/hasLiked/:uid", authJwt.verifyToken, videoController.hasL
 router.post("/api/auth/signup", verifySignUp.checkDuplicateUsername, userController.signup);
 router.post("/api/auth/login", userController.login);
 
+router.post("/api/email/newSignup", userController.emailSignup);
+
 module.exports = router;
