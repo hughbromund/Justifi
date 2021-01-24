@@ -7,12 +7,21 @@
 
 import SwiftUI
 import CameraManager
+import Request
+import Json
 
 struct RecorderView: View {
+    @Binding var postUsername : String
+    @Binding  var accessToken: String
+    
+    
     @State var cameraManager: CameraManager?
     @State var capturedImage: UIImage?
     @State var firstLoad: Bool = true
     @State var isRecording: Bool = false
+    
+    @State var showUpload : Bool = false
+    @State var uploadURL : URL = URL(string: "https://hughbromund.com")!
     
     var body: some View {
         ZStack {
@@ -38,28 +47,30 @@ struct RecorderView: View {
                             .foregroundColor(.red)
 //                            .animation(.spring())
                             .onTapGesture {
-                            print("isRecording \(isRecording)")
-                            if (isRecording) {
-                                isRecording = false
-                                cameraManager?.stopVideoRecording({ (videoURL, recordError) -> Void in
-                                    guard let videoURL = videoURL else {
-                                        //Handle error of no recorded video URL
-                                        return
-                                    }
-                                    do {
-                                        print("Captured Video URL \(videoURL)")
-                                        return
-                                    }
-                                    catch {
-                                        //Handle error occured during copy
-                                    }
-                                })
-                            } else {
-                                cameraManager?.startRecordingVideo()
-                                isRecording = true
-                            }
-
-                        }.padding()
+                                print("isRecording \(isRecording)")
+                                if (isRecording) {
+                                    isRecording = false
+                                    cameraManager?.stopVideoRecording({ (videoURL, recordError) -> Void in
+                                        guard let videoURL = videoURL else {
+                                            //Handle error of no recorded video URL
+                                            return
+                                        }
+                                        do {
+                                            print("Captured Video URL \(videoURL)")
+                                            showUpload = true
+                                            uploadURL = videoURL
+                                            return
+                                        }
+                               
+                                    })
+                                } else {
+                                    cameraManager?.startRecordingVideo()
+                                    isRecording = true
+                                }
+                            }.sheet(isPresented: $showUpload, content: {
+                                PostView(postURL: $uploadURL, postUsername: $postUsername, accessToken: $accessToken, showUpload: $showUpload)
+                            })
+                            .padding()
                 }
                 }
             }
@@ -144,7 +155,7 @@ struct CameraView : UIViewControllerRepresentable {
         override func viewDidLoad() {
             // self.view.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
 
-            self.coordinator.cameraManager.addLayerPreviewToView(self.view, newCameraOutputMode: .videoOnly) {
+            self.coordinator.cameraManager.addLayerPreviewToView(self.view, newCameraOutputMode: .videoWithMic) {
                 print("CMViewController DONE")
             }
         }
@@ -153,7 +164,10 @@ struct CameraView : UIViewControllerRepresentable {
 }
 
 struct RecorderView_Previews: PreviewProvider {
+    @State static var tempUsername : String = "HughBromund"
+    @State static var tempToken : String = "HughBromund"
+    
     static var previews: some View {
-        RecorderView()
+        RecorderView(postUsername: $tempUsername, accessToken: $tempToken)
     }
 }
