@@ -42,7 +42,7 @@ struct CommentView: View {
 //                        Text("HEllo There")
 //                    }
                     ZStack {
-                        VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: index.currentIndex, curRowIndex: $curRowIndex)
+                        VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, videoTitle: index.title, videoUsername: index.username, currentIndex: $curIndex, curRowIndex: $curRowIndex)
                     }
                     
                     .cornerRadius(5)
@@ -55,7 +55,7 @@ struct CommentView: View {
                         print("Adding more pages...")
                     }
                     curRowIndex = page
-                    print("Page changed to: \(page)")})
+                    print("Comment Page changed to: \(page)")})
                 .contentLoadingPolicy(.lazy(recyclingRatio: 5))
                 .swipeInteractionArea(.allAvailable)
                 .pagingPriority(.simultaneous)
@@ -64,7 +64,7 @@ struct CommentView: View {
         }.onAppear(perform: {
             print("Loading Comment Videos")
             if (firstLoad) {
-                commentVideos.append(videoInfo)
+                commentVideos.append(VideoInfo(thumbnail: videoInfo.thumbnail, uid: videoInfo.uid, title: videoInfo.title, url: videoInfo.url, upvotes: videoInfo.upvotes, username: videoInfo.username, index: 0, currentIndex: $curIndex))
                 firstLoad = true
             }
             
@@ -83,7 +83,7 @@ struct CommentView: View {
                         
                         // print(tempList)
                         
-                        var count : Int = 0
+                        var count : Int = 1
                         for item in tempList {
                             print(Json(item))
                             let thumbnail : String = Json(item).thumbnail.string
