@@ -42,7 +42,7 @@ struct CommentView: View {
 //                        Text("HEllo There")
 //                    }
                     ZStack {
-                        VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, videoTitle: index.title, videoUsername: index.username, currentIndex: $curIndex, curRowIndex: $curRowIndex)
+                        VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, videoTitle: index.title, videoUsername: index.username, videoUID: index.uid, accessToken: $accessToken, currentIndex: $curIndex, curRowIndex: $curRowIndex)
                     }
                     
                     .cornerRadius(5)

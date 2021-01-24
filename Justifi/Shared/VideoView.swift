@@ -8,6 +8,8 @@
 import SwiftUI
 import AVKit
 import URLImage
+import Request
+import Json
 
 class PlayerUIView: UIView {
     private var playerLayer = AVPlayerLayer()
@@ -43,7 +45,11 @@ struct VideoView: View {
     var thumbnailURL : String
     var videoTitle : String
     var videoUsername : String
+    var videoUID : String
     
+    @Binding var accessToken : String
+    
+    @State private var isLiked = false
     
     // @Binding var videoURL : URL
     @State private var isPaused = false
@@ -89,7 +95,26 @@ struct VideoView: View {
                             .frame(width: 50, height: 50)
                             .font(Font.system(.largeTitle).bold())
                     }
+                    
                 }.onAppear {
+                    if (firstLoad) {
+                        firstLoad = false
+                        Request {
+                            Url("https://justifi.uc.r.appspot.com/api/video/hasLiked/\(videoUID)")
+                            Method(.get)
+                            Header.Any(key: "x-access-token", value: accessToken)
+                            Header.ContentType(.json)
+                        }.onData { data in
+                            do{
+                                try print(Json(data))
+                                isLiked = try Json(data).hasLiked.bool
+                            } catch {
+                                print("error occured")
+                            }
+                        }.onError{ error in
+                            print(error)
+                        }.call()
+                    }
                     print("Page appeared")
                     player.pause()
                     if (!isPaused) {
@@ -99,6 +124,7 @@ struct VideoView: View {
                 }.onDisappear {
                     player.pause()
                 }
+                
             } else {
                 URLImage(url: URL(string: thumbnailURL)!,
                          content: { image in
@@ -110,6 +136,14 @@ struct VideoView: View {
             VStack {
                 Spacer()
                 Spacer()
+//                Image(systemName: isLiked ? "heart.fill" : "heart")
+////                    .resizable()
+////                    .scaledToFit()
+//                    .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
+//                    .scaleEffect(likeAnimation ? 10 : 0)
+//                    .opacity(likeAnimation ? 1 : 0)
+//                    .animation(.spring())
+//                    .foregroundColor(isLiked ? .red : .black)
                 Spacer()
                 Spacer()
                 Spacer()
@@ -122,6 +156,42 @@ struct VideoView: View {
                         .padding(.leading, 15)
                         
                     Spacer()
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                        .font(.title)
+                        .padding()
+                        .foregroundColor(.red)
+                        .onTapGesture {
+                            print("Like Button Clicked")
+                           
+                            if (!isLiked) {
+                                print("Liking Video")
+                                Request {
+                                    Url("https://justifi.uc.r.appspot.com/api/video/likeVideo/")
+                                    Method(.post)
+                                    Header.Any(key: "x-access-token", value: accessToken)
+                                    Header.ContentType(.json)
+                                    RequestBody(["uid": videoUID])
+                                }.onData { data in
+                                   print(data)
+                                }.onError{ error in
+                                    print(error)
+                                }.call()
+                            } else {
+                                print("Removing Like")
+                                Request {
+                                    Url("https://justifi.uc.r.appspot.com/api/video/unlikeVideo/")
+                                    Method(.post)
+                                    Header.Any(key: "x-access-token", value: accessToken)
+                                    Header.ContentType(.json)
+                                    RequestBody(["uid": videoUID])
+                                }.onData { data in
+                                   print(data)
+                                }.onError{ error in
+                                    print(error)
+                                }.call()
+                            }
+                            isLiked.toggle()
+                        }
                 }
                 HStack {
                     Text(videoUsername)
@@ -131,9 +201,14 @@ struct VideoView: View {
                         .padding(.leading, 15)
                         .padding(.bottom, 10)
                     Spacer()
+                    Image(systemName: "plus.bubble")
+                        .font(.title2)
+                        .padding()
+                        .foregroundColor(.white)
                 }
                 Spacer()
             }
+
         }
     }
 }
@@ -169,14 +244,14 @@ struct PlayerView: UIViewRepresentable {
     }
 }
 
-struct VideoView_Previews: PreviewProvider {
-    @State static var tempRow : Int = 1
-    @State static var tempCol : Int = 1
-    
-    
-    static var previews: some View {
-        VideoView(index: 0, rowIndex: 0, videoURL: DEFAULT_VIDEO_URL, thumbnailURL: DEFAULT_THUMBNAIL_URL, videoTitle: "A Critique of the Heizenburg Approach", videoUsername: "Albert", currentIndex: $tempCol, curRowIndex: $tempRow)
-    }
-}
+//struct VideoView_Previews: PreviewProvider {
+//    @State static var tempRow : Int = 1
+//    @State static var tempCol : Int = 1
+//
+//
+//    static var previews: some View {
+//        VideoView(index: 0, rowIndex: 0, videoURL: DEFAULT_VIDEO_URL, thumbnailURL: DEFAULT_THUMBNAIL_URL, videoTitle: "A Critique of the Heizenburg Approach", videoUsername: "Albert", currentIndex: $tempCol, curRowIndex: $tempRow)
+//    }
+//}
 
 // VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: $curIndex, curRowIndex: $curRowIndex)
