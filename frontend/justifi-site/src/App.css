@@ -1,0 +1,12 @@
+.App {
+  position: absolute;
+  padding: 0;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+
+  /* color: #13293d; */
+  color: #f7f4f3ff;
+  font-family: "Lexend Deca", sans-serif;
+}

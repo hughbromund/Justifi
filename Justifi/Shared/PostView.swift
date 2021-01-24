@@ -25,6 +25,9 @@ struct PostView: View {
     @State var isUploading : Bool = false
     @State var isSuccess : Bool = false
     
+    @Binding var commentUploadSheet : Bool
+    var commentVideoUID : String
+    
     var body: some View {
         VStack{
             HStack {
@@ -69,6 +72,7 @@ struct PostView: View {
             Button(action: {
                 if (isSuccess) {
                     showUpload = false
+                    commentUploadSheet = false
                     return
                 }
                 print("Uploading Post")
@@ -92,7 +96,6 @@ struct PostView: View {
                             multipartFormData.append(postURL, withName: "file")
                         }, to: uploadURL, method: .post).response { result in
                             print(Json(result))
-                            
                             Request {
                                 Url("https://justifi.uc.r.appspot.com/api/video/uploadData")
                                 Method(.post)
@@ -101,17 +104,17 @@ struct PostView: View {
                                 RequestBody([
                                     "uid": uploadUID,
                                     "title": postTitle,
-                                    "isOriginal": true,
-                                    "origUID": "none"
+                                    "isOriginal": commentVideoUID == "NONE" ? true : false,
+                                    "origUID": commentVideoUID
                                 ])
                             }.onData { data in
                                 print("Success")
-                                isUploading = false
-                                isSuccess = true
                             }.onError{ error in
                                 print(error)
                                 isUploading = false
                             }.call()
+                            isUploading = false
+                            isSuccess = true
                         }         
                     } catch {
                         isUploading = false
@@ -160,6 +163,6 @@ struct PostView_Previews: PreviewProvider {
 
 
     static var previews: some View {
-        PostView(postURL: $tempURL, postUsername: $tempUsername, accessToken: $tempToken, showUpload: $tempUp)
+        PostView(postURL: $tempURL, postUsername: $tempUsername, accessToken: $tempToken, showUpload: $tempUp, commentUploadSheet: $tempUp, commentVideoUID : "NONE")
     }
 }
