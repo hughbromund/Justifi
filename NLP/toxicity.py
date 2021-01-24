@@ -18,12 +18,14 @@ def is_toxic(video_url, id):
 
     """Transcribe the given audio file."""
 
+    # temp_dir = os.tmpdir()
+
     # Pull audio from video
     command = "ffmpeg -y -i " + video_url + \
-        " -ab 160k -ac 2 -ar 44100 -vn ./new_audio.wav"
+        " -ab 160k -ac 2 -ar 44100 -vn /tmp/new_audio.wav"
     subprocess.call(command, shell=True)
     client = speech.SpeechClient()
-    speech_file = "./new_audio.wav"
+    speech_file = "/tmp/new_audio.wav"
 
     # Open file and parse content and frame rate
     with io.open(speech_file, "rb") as audio_file:
