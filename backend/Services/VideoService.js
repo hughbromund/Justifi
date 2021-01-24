@@ -32,9 +32,6 @@ exports.getNextVideo = async function (req) {
 
     var result = await Videos.aggregate(query);
 
-    console.log(user)
-    console.log("-------------------------------")
-    console.log(videos)
     
 
     /*
@@ -172,22 +169,24 @@ exports.calculateVideoList = async function (req) {
     let date = new Date();
     date.setDate(date.getDay() - 1)
 
-    let videoList = await Videos.findAll({date: { "$gte" : date.toISOString}, isViewable: true, isOriginal: true})
+    let videoList = await Videos.find({date: { "$gte" : date}, isViewable: true, isOriginal: true})
 
     for (var i = 0; i < videoList.length; i++) {
         var score = videoList[i].upvotes * (user.interests[videoList[i].tag] / (user.numUpvotes + 28));
         videoList[i].score = score;
     }
+    
     //create score for each
 
     videoList.sort((a, b) => (a.score > b.score) ? 1 : -1)
 
     let finalList = []
     for (var i = 0; i < videoList.length; i++) {
-        finalList.push(videoList[i].uri)
+        finalList.push(videoList[i].uid)
     }
+    console.log(finalList)
 
-    let result = await Users.UpdateOne({_id: req.userId}, {feed: finalList})
+    let result = await Users.updateOne({_id: req.userId}, {feed: finalList})
 
     return { message: "Feed Calculation Complete"}
 }
