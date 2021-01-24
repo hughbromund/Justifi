@@ -36,7 +36,7 @@ struct NavigationView: View {
                     Text("Account")
                 }
             }
-        }
+        }.accentColor(Color(red: 19 / 255, green: 41 / 255, blue: 61 / 255))
     }
 }
 

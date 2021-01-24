@@ -29,6 +29,7 @@ struct RecorderView: View {
     
     var body: some View {
         ZStack {
+            Color(red: 247.0/255.0, green: 244.0/255.0, blue: 243.0/255.0, opacity: 1.0).edgesIgnoringSafeArea(.all)
             if cameraManager !== nil {
                 ZStack {
                     VStack {
