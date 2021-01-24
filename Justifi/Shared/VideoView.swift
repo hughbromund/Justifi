@@ -36,6 +36,8 @@ class PlayerUIView: UIView {
 struct VideoView: View {
     // var pageNum : Int
     
+    var index : Int
+    
     var videoURL : String
     var thumbnailURL : String
     
@@ -44,6 +46,10 @@ struct VideoView: View {
     @State private var isPaused = false
     @State private var  player: AVQueuePlayer = AVQueuePlayer()
     
+    @State private var firstLoad : Bool = true
+    
+    @Binding var currentIndex : Int
+    
 //    static func == (lhs: VideoView, rhs: VideoView) -> Bool {
 //        return ((lhs.pageNum - rhs.pageNum) != 0)
 //    }
@@ -51,9 +57,10 @@ struct VideoView: View {
 //        hasher.combine(pageNum)
 //        // hasher.combine(command)
 //    }
-
-    
     var body: some View {
+        
+        
+        if (currentIndex == index) {
             ZStack {
                 URLImage(url: URL(string: thumbnailURL)!,
                          content: { image in
@@ -79,13 +86,16 @@ struct VideoView: View {
                         .font(Font.system(.largeTitle).bold())
                 }
             }.onAppear {
+                print("Page appeared")
                 player.pause()
                 if (!isPaused) {
                     player.play()
                 }
+               
             }.onDisappear {
                 player.pause()
             }
+        }
     }
 }
 
@@ -119,9 +129,9 @@ struct PlayerView: UIViewRepresentable {
         return PlayerUIView(player: player, url: url)
     }
 }
-
-struct VideoView_Previews: PreviewProvider {
-    static var previews: some View {
-        VideoView(videoURL: DEFAULT_VIDEO_URL, thumbnailURL: DEFAULT_THUMBNAIL_URL)
-    }
-}
+//
+//struct VideoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VideoView(videoURL: DEFAULT_VIDEO_URL, thumbnailURL: DEFAULT_THUMBNAIL_URL)
+//    }
+//}
