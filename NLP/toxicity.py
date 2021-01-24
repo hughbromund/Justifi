@@ -85,7 +85,7 @@ def is_toxic(video_url, id):
             'uid': id
         }, {
             '$set': {
-                'isViewable': False
+                'isViewable': True
             }
         }, upsert=False)
 
