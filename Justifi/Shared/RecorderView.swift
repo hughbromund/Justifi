@@ -43,7 +43,7 @@ struct RecorderView: View {
                         Image(systemName: isRecording ? "record.circle.fill" : "record.circle")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 50, height: 50)
+                            .frame(width: 75, height: 75)
                             .foregroundColor(.red)
 //                            .animation(.spring())
                             .onTapGesture {

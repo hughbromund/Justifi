@@ -11,35 +11,50 @@ import Alamofire
 import Request
 import Json
 
+var DEFAULT_VIDEO_URL = "https://videodelivery.net/5bbd1c8f7881bb36cbe9106ce260f272/manifest/video.m3u8"
+
+var DEFAULT_THUMBNAIL_URL = "https://videodelivery.net/5bbd1c8f7881bb36cbe9106ce260f272/thumbnails/thumbnail.jpg"
+
+
+struct VideoInfo : Hashable, Equatable {
+    var thumbnail : String
+    var uid : String
+    var title : String
+    var url : String
+    var upvotes : Int
+    var username : String
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uid)
+    }
+}
+
 struct ScrollView: View {
     
     @Binding var accessToken: String
     
     @StateObject var page: Page = .first()
     
-    
-    // @ObservedObject var page: Page = .first()
-    var items = Array(0..<3)
-    
-    var videoViews = Array([VideoView(pageNum: 0), VideoView(pageNum: 1), VideoView(pageNum: 2)])
+    @State var videoInfos : [VideoInfo] = [VideoInfo]()
     
     var body: some View {
         ZStack {
             Pager(page: page,
-                  data: items,
+                  data: videoInfos,
                   id: \.self,
                   content: { index in
                       // create a page based on the data passed
                     ZStack {
-                        videoViews[index]
+                        VideoView(videoURL: index.url, thumbnailURL: index.thumbnail)
                     }
                     .cornerRadius(5)
                     .shadow(radius: 5)
                   }).vertical()
-                .loopPages()
+//                .loopPages()
                 .onPageChanged({ page in
-                    if (page == videoViews.count - 2) {
+                    if (page >= videoInfos.count - 2) {
                         // Add More pages
+                        print("Adding more pages...")
                     }
                     print("Page changed to: \(page)")})
                 .contentLoadingPolicy(.lazy(recyclingRatio: 5))
@@ -65,9 +80,30 @@ struct ScrollView: View {
                     Header.Any(key: "x-access-token", value: accessToken)
                     Header.ContentType(.json)
                 }.onData { data in
-                    print("list of video")
+                    // print("list of video")
                     do {
-                        try print(Json(data))
+                        // try print(Json(data).list.array)
+                        
+                        let tempList = try Json(data).list.array
+                        
+                        // print(tempList)
+                        
+                        
+                        for item in tempList {
+                            print(Json(item))
+                            let thumbnail : String = Json(item).thumbnail.string
+                            let uid : String = Json(item).uid.string
+                            let title : String = Json(item).title.string
+                            let url : String = Json(item).url.string
+                            let upvotes : Int = Json(item).upvotes.int
+                            let username : String = Json(item).username.string
+                            
+                            videoInfos.append(VideoInfo(thumbnail: thumbnail, uid: uid, title: title, url: url, upvotes: upvotes, username: username))
+                        }
+                        
+                        // print(videoInfos)
+                        
+                        
                     } catch {
                         print("Error")
                     }

@@ -18,7 +18,7 @@ class PlayerUIView: UIView {
         playerLayer = AVPlayerLayer(player: player)
         let playerItem = AVPlayerItem(url: URL(string: url)!)
         playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
-        player.play()
+        player.pause()
         // playerLayer.player = player
         layer.addSublayer(playerLayer)
         // layer.frame = UIScreen.main.bounds
@@ -34,7 +34,12 @@ class PlayerUIView: UIView {
   }}
 
 struct VideoView: View {
-    var pageNum : Int
+    // var pageNum : Int
+    
+    var videoURL : String
+    var thumbnailURL : String
+    
+    
     // @Binding var videoURL : URL
     @State private var isPaused = false
     @State private var  player: AVQueuePlayer = AVQueuePlayer()
@@ -50,13 +55,13 @@ struct VideoView: View {
     
     var body: some View {
             ZStack {
-                URLImage(url: URL(string: "https://videodelivery.net/82c13a0dcd68d1cd052be636abc0199a/thumbnails/thumbnail.jpg")!,
+                URLImage(url: URL(string: thumbnailURL)!,
                          content: { image in
                              image
                                  .resizable()
                                  .aspectRatio(contentMode: .fit)
                          })
-                PlayerContainerView(player: player, url: "https://videodelivery.net/82c13a0dcd68d1cd052be636abc0199a/manifest/video.m3u8").onTapGesture {
+                PlayerContainerView(player: player, url: videoURL).onTapGesture {
                         print("Tapping Video // Video is \(isPaused)")
                         if (isPaused) {
                             player.play()
@@ -74,12 +79,11 @@ struct VideoView: View {
                         .font(Font.system(.largeTitle).bold())
                 }
             }.onAppear {
-                
+                player.pause()
                 if (!isPaused) {
                     player.play()
                 }
             }.onDisappear {
-               
                 player.pause()
             }
     }
@@ -118,6 +122,6 @@ struct PlayerView: UIViewRepresentable {
 
 struct VideoView_Previews: PreviewProvider {
     static var previews: some View {
-        VideoView(pageNum: 1)
+        VideoView(videoURL: DEFAULT_VIDEO_URL, thumbnailURL: DEFAULT_THUMBNAIL_URL)
     }
 }
