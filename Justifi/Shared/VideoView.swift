@@ -41,6 +41,8 @@ struct VideoView: View {
     
     var videoURL : String
     var thumbnailURL : String
+    var videoTitle : String
+    var videoUsername : String
     
     
     // @Binding var videoURL : URL
@@ -61,41 +63,76 @@ struct VideoView: View {
 //    }
     var body: some View {
         
-        
-        if (currentIndex == index && curRowIndex == rowIndex) {
-            ZStack {
+        ZStack {
+            if (currentIndex == index && curRowIndex == rowIndex) {
+                ZStack {
+                    URLImage(url: URL(string: thumbnailURL)!,
+                             content: { image in
+                                 image
+                                     .resizable()
+                                     .aspectRatio(contentMode: .fit)
+                             })
+                    PlayerContainerView(player: player, url: videoURL).onTapGesture {
+                            print("Tapping Video // Video is \(isPaused)")
+                            if (isPaused) {
+                                player.play()
+                                isPaused = false
+                            } else {
+                                player.pause()
+                                isPaused = true
+                            }
+                        }
+                    if (isPaused) {
+                        Image(systemName: "play.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                            .font(Font.system(.largeTitle).bold())
+                    }
+                }.onAppear {
+                    print("Page appeared")
+                    player.pause()
+                    if (!isPaused) {
+                        player.play()
+                    }
+                   
+                }.onDisappear {
+                    player.pause()
+                }
+            } else {
                 URLImage(url: URL(string: thumbnailURL)!,
                          content: { image in
                              image
                                  .resizable()
                                  .aspectRatio(contentMode: .fit)
                          })
-                PlayerContainerView(player: player, url: videoURL).onTapGesture {
-                        print("Tapping Video // Video is \(isPaused)")
-                        if (isPaused) {
-                            player.play()
-                            isPaused = false
-                        } else {
-                            player.pause()
-                            isPaused = true
-                        }
-                    }
-                if (isPaused) {
-                    Image(systemName: "play.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                        .font(Font.system(.largeTitle).bold())
+            }
+            VStack {
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                Spacer()
+                HStack {
+                    Text(videoTitle)
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .bold()
+                        .padding(.bottom, 0)
+                        .padding(.leading, 15)
+                        
+                    Spacer()
                 }
-            }.onAppear {
-                print("Page appeared")
-                player.pause()
-                if (!isPaused) {
-                    player.play()
+                HStack {
+                    Text(videoUsername)
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(.top, 5)
+                        .padding(.leading, 15)
+                        .padding(.bottom, 10)
+                    Spacer()
                 }
-               
-            }.onDisappear {
-                player.pause()
+                Spacer()
             }
         }
     }
@@ -131,9 +168,15 @@ struct PlayerView: UIViewRepresentable {
         return PlayerUIView(player: player, url: url)
     }
 }
-//
-//struct VideoView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        VideoView(videoURL: DEFAULT_VIDEO_URL, thumbnailURL: DEFAULT_THUMBNAIL_URL)
-//    }
-//}
+
+struct VideoView_Previews: PreviewProvider {
+    @State static var tempRow : Int = 1
+    @State static var tempCol : Int = 1
+    
+    
+    static var previews: some View {
+        VideoView(index: 0, rowIndex: 0, videoURL: DEFAULT_VIDEO_URL, thumbnailURL: DEFAULT_THUMBNAIL_URL, videoTitle: "A Critique of the Heizenburg Approach", videoUsername: "Albert", currentIndex: $tempCol, curRowIndex: $tempRow)
+    }
+}
+
+// VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: $curIndex, curRowIndex: $curRowIndex)
