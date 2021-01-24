@@ -15,7 +15,9 @@ struct CommentView: View {
     
     var videoInfo : VideoInfo
     
-    @State var curIndex : Int
+    @Binding var curIndex : Int
+    
+    @State private var curRowIndex : Int = 0
     
     @State private var commentVideos : [VideoInfo] = [VideoInfo]()
     
@@ -24,6 +26,8 @@ struct CommentView: View {
     @StateObject private var page: Page = .first()
     
     @State private var firstLoad : Bool = true
+    
+    @State private var didLoadComments : Bool = false
     
 //    @State private var data = Array(0..<4)
     
@@ -38,7 +42,7 @@ struct CommentView: View {
 //                        Text("HEllo There")
 //                    }
                     ZStack {
-                        VideoView(index: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: index.currentIndex)
+                        VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: index.currentIndex, curRowIndex: $curRowIndex)
                     }
                     
                     .cornerRadius(5)
@@ -50,17 +54,67 @@ struct CommentView: View {
                         // Add More pages
                         print("Adding more pages...")
                     }
-                    curIndex = page
+                    curRowIndex = page
                     print("Page changed to: \(page)")})
                 .contentLoadingPolicy(.lazy(recyclingRatio: 5))
                 .swipeInteractionArea(.allAvailable)
+                .pagingPriority(.simultaneous)
                 .itemSpacing(10)
-                .padding(8)
+                .padding(30)
         }.onAppear(perform: {
             print("Loading Comment Videos")
             if (firstLoad) {
                 commentVideos.append(videoInfo)
                 firstLoad = true
+            }
+            
+            if (!didLoadComments) {
+                Request {
+                    Url("https://justifi.uc.r.appspot.com/api/video/response/\(videoInfo.uid)")
+                    Method(.get)
+                    Header.Any(key: "x-access-token", value: accessToken)
+                    Header.ContentType(.json)
+                }.onData { data in
+                    // print("list of video")
+                    do {
+                        // try print(Json(data).list.array)
+                        
+                        let tempList = try Json(data).list.array
+                        
+                        // print(tempList)
+                        
+                        var count : Int = 0
+                        for item in tempList {
+                            print(Json(item))
+                            let thumbnail : String = Json(item).thumbnail.string
+                            let uid : String = Json(item).uid.string
+                            let title : String = Json(item).title.string
+                            let url : String = Json(item).url.string
+                            let upvotes : Int = Json(item).upvotes.int
+                            let username : String = Json(item).username.string
+                            
+                            commentVideos.append(VideoInfo(thumbnail: thumbnail, uid: uid, title: title, url: url, upvotes: upvotes, username: username, index: count, currentIndex: $curIndex))
+                            
+                            count+=1
+                        }
+                        
+                        print(commentVideos)
+                        
+                        didLoadComments = true
+                        // print(videoInfos)
+                        
+                        
+                    } catch {
+                        print("Error")
+                    }
+                   
+
+                }.onError{ error in
+                    print(error)
+                }.call()
+                
+                
+                
             }
 
             

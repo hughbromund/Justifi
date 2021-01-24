@@ -37,6 +37,7 @@ struct VideoView: View {
     // var pageNum : Int
     
     var index : Int
+    var rowIndex : Int
     
     var videoURL : String
     var thumbnailURL : String
@@ -49,6 +50,7 @@ struct VideoView: View {
     @State private var firstLoad : Bool = true
     
     @Binding var currentIndex : Int
+    @Binding var curRowIndex : Int
     
 //    static func == (lhs: VideoView, rhs: VideoView) -> Bool {
 //        return ((lhs.pageNum - rhs.pageNum) != 0)
@@ -60,7 +62,7 @@ struct VideoView: View {
     var body: some View {
         
         
-        if (currentIndex == index) {
+        if (currentIndex == index && curRowIndex == rowIndex) {
             ZStack {
                 URLImage(url: URL(string: thumbnailURL)!,
                          content: { image in

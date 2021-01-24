@@ -59,7 +59,7 @@ struct ScrollView: View {
                     ZStack {
                         
                  
-                        CommentView(videoInfo: index, curIndex: index.index, accessToken: $accessToken)
+                        CommentView(videoInfo: index, curIndex: $curIndex, accessToken: $accessToken)
                         // Rectangle()
                         
                         // VideoView(index: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: index.currentIndex)
@@ -77,6 +77,7 @@ struct ScrollView: View {
                     print("Page changed to: \(page)")})
                 .contentLoadingPolicy(.lazy(recyclingRatio: 5))
                 .swipeInteractionArea(.allAvailable)
+                .pagingPriority(.simultaneous)
             VStack {
                 HStack {
                     Text("Justifi").font(.largeTitle).bold().padding()
