@@ -110,7 +110,7 @@ exports.uploadVideoData = async function (req) {
       });
     
     if (!isOriginal) {
-        Videos.updateOne({
+        let temp_res = await Videos.updateOne({
             uid: origUID
         },
         {
