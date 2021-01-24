@@ -1,5 +1,6 @@
 const path = require("path");
 const got = require("got");
+const { user } = require("../Database");
 const config = require(path.resolve(__dirname, "../config.json"));
 
 const Videos = require(path.resolve(__dirname, "../Database/Models/Videos"));
@@ -20,7 +21,7 @@ exports.getResponseVideoStub = async function (req) {
 
 
 exports.getNextVideo = async function (req) {
-    let user = await Users.findOne({username: req.userId})
+    let user = await Users.findOne({_id: req.userId})
     //let videos = await Videos.find({"uid" : { "$in" : user.feed}})
 
     var query = [
@@ -84,7 +85,8 @@ exports.getUploadVideoURL = async function (req) {
 }
 
 exports.uploadVideoData = async function (req) {
-    const {uid, url, thumbnail, title, username, isOriginal, origUID} = req.body
+    const {uid, url, thumbnail, title, isOriginal, origUID} = req.body
+    let user = await Users.findOne({_id: req.userId})
     const video = new Videos({
         uid: uid,
         url: url,
@@ -92,12 +94,12 @@ exports.uploadVideoData = async function (req) {
         title: title,
         date: new Date(Date.now()).toISOString(),
         upvotes: 1,
-        username: username,
+        username: user.username,
         isOriginal: isOriginal,
         responsesUID: []
     })
 
-    user.save((err, user) => {
+    video.save((err, user) => {
         if (err) {
           //res.status(500).send({ message: err });
           return;
@@ -114,5 +116,74 @@ exports.uploadVideoData = async function (req) {
         })
     }
 
+    const categorizeResult = await got.post('https://us-central1-jusifi.cloudfunctions.net/post_categorize', {
+        json: {
+            "uid": uid,
+            "url": url
+        },
+        responseType: 'json',
+        resolveBodyOnly: true
+    })
+
+    const toxicResult = await got.post('https://us-central1-jusifi.cloudfunctions.net/post_toxicity', {
+        json: {
+            "uid": uid,
+            "url": url
+        },
+        responseType: 'json',
+        resolveBodyOnly: true
+    })
+
     return { message: "Video information saved successfully!" };
+}
+
+exports.likeVideo = async function (req) {
+    const {uid} = req.body;
+    let video = await Videos.findOne({uid: uid})
+    let user = await Users.findOne({_id: req.userId})
+    let category = "interests." + video.tag
+
+    let userUpdate = await Users.updateOne({username: user.username}, {"$inc": {numUpvotes: 1, [category]: 1}})
+    let vidUpdate = await Videos.updateOne({uid: uid}, {"$inc": {upvotes: 1}})
+
+    return { message: "Upvote Successful"};
+}
+
+exports.unlikeVideo = async function (req) {
+    const {uid} = req.body;
+    let video = await Videos.findOne({uid: uid})
+    let user = await Users.findOne({_id: req.userId})
+    let category = "interests." + video.tag
+
+    let userUpdate = await Users.updateOne({username: user.username}, {"$inc": {numUpvotes: -1, [category]: -1}})
+    let vidUpdate = await Videos.updateOne({uid: uid}, {"$inc": {upvotes: -1}})
+
+    return { message: "Upvote Successful"};
+}
+
+exports.calculateVideoList = async function (req) {
+    let user = await Users.findOne({_id: req.userId})
+
+    let date = new Date();
+    date.setDate(date.getDay() - 1)
+
+    let videoList = await Videos.findAll({date: { "$gte" : date.toISOString}, isViewable: true, isOriginal: true})
+
+    for (var i = 0; i < videoList.length; i++) {
+        var score = videoList[i].upvotes * (user.interests[videoList[i].tag] / (user.numUpvotes + 28));
+        videoList[i].score = score;
+    }
+    //create score for each
+
+    videoList.sort((a, b) => (a.score > b.score) ? 1 : -1)
+
+    let finalList = []
+    for (var i = 0; i < videoList.length; i++) {
+        finalList.push(videoList[i].uri)
+    }
+
+    let result = await Users.UpdateOne({_id: req.userId}, {feed: finalList})
+
+    return { message: "Feed Calculation Complete"}
+
 }

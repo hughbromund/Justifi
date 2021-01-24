@@ -13,6 +13,8 @@ const videosSchema = new Schema({
     date: {type: Date, unique: false, required: true},
     responsesUID: { type: Array, default: [], unique: false, required: true},
     isOriginal: { type: Boolean, default: true, unique: false, required: true},
+    isViewable: { type: Boolean, default: false, unique: false, required: true},
+    tag: { type: String, unique: false, required: false},
 }, { collection: "Videos"})
 
 // Define schema methods
