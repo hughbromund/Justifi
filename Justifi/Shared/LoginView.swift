@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Request
+import Json
 
 let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
 
@@ -35,7 +37,24 @@ struct LoginView: View {
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
             Text("Forgot your password?").padding(.bottom, 20)
-            Button(action: {print("Button tapped")}) {
+            Button(action: {
+                    print("Button tapped")
+                    Request {
+                        Url("https://justifi.uc.r.appspot.com/test")
+                    }.onData { data in
+                        do {
+                            try print("onData: \(Json(data)["testVal"])")
+                            try print("onData: \(Json(data))")
+                        } catch {
+                            print("Error")
+                        }
+                        
+                    }
+                    .onError { error in
+                        print("onError: \(error)")
+                    }
+                    .call()
+            }) {
                 Text("LOGIN")
                     .font(.headline)
                     .foregroundColor(.white)
@@ -44,6 +63,9 @@ struct LoginView: View {
                     .background(Color.blue)
                     .cornerRadius(15.0)
             }
+            Text("\(username)")
+            Text("\(password)")
+
         }
     }
 }
