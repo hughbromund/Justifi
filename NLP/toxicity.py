@@ -1,4 +1,3 @@
-from google.cloud import language_v1
 from google.cloud import speech
 import io
 import json
@@ -7,11 +6,10 @@ import config
 import os
 import wave
 import subprocess
-import argparse
 from pymongo import MongoClient
 
 
-def get_vid_cat(video_url, id):
+def is_toxic(video_url, id):
     """ Mongo stuff """
 
     client = MongoClient(config.mongo_url)
@@ -52,55 +50,49 @@ def get_vid_cat(video_url, id):
         full_transcript = full_transcript + \
             result.alternatives[0].transcript + "."
 
-    """Classify the input text into categories. """
+    print("TRANSCRIPT: {}".format(full_transcript))
 
-    language_client = language_v1.LanguageServiceClient()
+    """ TOXICITY ANALYSIS """
 
-    text = full_transcript
-    document = language_v1.Document(
-        content=text, type_=language_v1.Document.Type.PLAIN_TEXT
-    )
-    try:
-        response = language_client.classify_text(
-            request={'document': document})
-    except:
-        print("NOT ENOUGH TOKENS!!")
-        return {"category": "None"}
-    categories = response.categories
+    API_KEY = config.perspective_api_key
 
-    result = {}
+    # Generates API client object dynamically based on service name and version.
+    service = discovery.build(
+        'commentanalyzer', 'v1alpha1', developerKey=API_KEY)
 
-    for category in categories:
-        # Turn the categories into a dictionary of the form:
-        # {category.name: category.confidence}, so that they can
-        # be treated as a sparse vector.
-        result[category.name] = category.confidence
+    analyze_request = {
+        'comment': {'text': full_transcript},
+        'requestedAttributes': {'TOXICITY': {}}
+    }
 
-    tag_to_store = ""
-    for x in result:
-        x = x[1:]
-        x = x.lower()
-        first_slash = x.find("/")
-        if first_slash != -1:
-            x = x[:first_slash]
-        x = x.replace("&", "and")
-        x = x.replace(" ", "_")
-        tag_to_store = x
-        break
+    response = service.comments().analyze(body=analyze_request).execute()
 
-    mycol.update_one({
-        'uid': id
-    }, {
-        '$set': {
-            'tag': tag_to_store
-        }
-    }, upsert=False)
+    ret_val = False
+    if response["attributeScores"]["TOXICITY"]["summaryScore"]["value"] > 0.6:
+        ret_val = True
 
-    print(result)
-    return result
+    # Update DB for video viewability
+    if ret_val:
+        mycol.update_one({
+            'uid': id
+        }, {
+            '$set': {
+                'isViewable': False
+            }
+        }, upsert=False)
+    else:
+        mycol.update_one({
+            'uid': id
+        }, {
+            '$set': {
+                'isViewable': False
+            }
+        }, upsert=False)
+
+    return {"is_toxic": ret_val}
 
 
-def post_categorize(request):
+def post_toxicity(request):
 
     request_json = request.get_json(silent=True)
     request_args = request.args
@@ -119,7 +111,7 @@ def post_categorize(request):
     else:
         uid = "1373d5002893cfb3c92e3608d23125f6"
 
-    return get_vid_cat(video_url=url, id=uid)
+    return is_toxic(video_url=url, id=uid)
 
-# get_vid_cat(video_url="https://videodelivery.net/1373d5002893cfb3c92e3608d23125f6/manifest/video.m3u8",
-#             id="1373d5002893cfb3c92e3608d23125f6")
+# print(is_toxic(video_url="https://videodelivery.net/1373d5002893cfb3c92e3608d23125f6/manifest/video.m3u8",
+#                id="1373d5002893cfb3c92e3608d23125f6"))
