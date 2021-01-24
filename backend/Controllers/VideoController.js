@@ -39,3 +39,8 @@ exports.calculateVideoList = async function (req, res, next) {
     let result = await VideoService.calculateVideoList(req);
     res.status(200).json(result);
 }
+
+exports.hasLiked = async function (req, res, next) {
+    let result = await VideoService.hasLiked(req);
+    res.status(200).json(result);
+}

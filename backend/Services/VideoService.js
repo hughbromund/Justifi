@@ -85,7 +85,11 @@ exports.getUploadVideoURL = async function (req) {
 }
 
 exports.uploadVideoData = async function (req) {
-    const {uid, url, thumbnail, title, isOriginal, origUID} = req.body
+    const {uid, title, isOriginal, origUID} = req.body
+
+    let url = "https://videodelivery.net/" + uid + "/manifest/video.m3u8";
+    let thumbnail = "https://videodelivery.net/" + uid + "/thumbnails/thumbnail.jpg";
+
     let user = await Users.findOne({_id: req.userId})
     const video = new Videos({
         uid: uid,
@@ -98,6 +102,7 @@ exports.uploadVideoData = async function (req) {
         isOriginal: isOriginal,
         responsesUID: []
     })
+    
 
     video.save((err, user) => {
         if (err) {
@@ -144,7 +149,7 @@ exports.likeVideo = async function (req) {
     let category = "interests." + video.tag
 
     let userUpdate = await Users.updateOne({username: user.username}, {"$inc": {numUpvotes: 1, [category]: 1}})
-    let vidUpdate = await Videos.updateOne({uid: uid}, {"$inc": {upvotes: 1}})
+    let vidUpdate = await Videos.updateOne({uid: uid}, {"$inc": {upvotes: 1}, "$push": {likedUsers: user.username}})
 
     return { message: "Upvote Successful"};
 }
@@ -156,7 +161,7 @@ exports.unlikeVideo = async function (req) {
     let category = "interests." + video.tag
 
     let userUpdate = await Users.updateOne({username: user.username}, {"$inc": {numUpvotes: -1, [category]: -1}})
-    let vidUpdate = await Videos.updateOne({uid: uid}, {"$inc": {upvotes: -1}})
+    let vidUpdate = await Videos.updateOne({uid: uid}, {"$inc": {upvotes: -1}, "$pull": {likedUsers: user.username}})
 
     return { message: "Upvote Successful"};
 }
@@ -185,5 +190,14 @@ exports.calculateVideoList = async function (req) {
     let result = await Users.UpdateOne({_id: req.userId}, {feed: finalList})
 
     return { message: "Feed Calculation Complete"}
-
 }
+
+exports.hasLiked = async function (req) {
+    let user = await Users.findOne({_id: req.userId})
+    let video = await Videos.findOne({uid: req.params.uid})
+
+    var hasLiked = video.likedUsers.includes(user.username);
+
+    return { "hasLiked": hasLiked}
+}
+
