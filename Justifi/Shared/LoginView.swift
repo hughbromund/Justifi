@@ -13,8 +13,14 @@ let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255
 
 struct LoginView: View {
     
+    @Binding var accessToken : String
+    @Binding var parentUsername : String
+    
     @State var username: String = ""
     @State var password: String = ""
+    
+    @State var loginSuccess : Bool = false
+    @State var isLoading : Bool = false
     
     var body: some View {
         VStack {
@@ -39,12 +45,23 @@ struct LoginView: View {
             Text("Forgot your password?").padding(.bottom, 20)
             Button(action: {
                     print("Button tapped")
+                    isLoading = true
                     Request {
-                        Url("https://justifi.uc.r.appspot.com/test")
+                        Url("https://justifi.uc.r.appspot.com/api/auth/login")
+                        Method(.post)
+                        Header.ContentType(.json)
+                        RequestBody([
+                            "username": username,
+                            "password": password
+                        ])
                     }.onData { data in
                         do {
-                            try print("onData: \(Json(data)["testVal"])")
-                            try print("onData: \(Json(data))")
+                            try print("onData: \(Json(data).accessToken)")
+                            try print(Json(data).accessToken.string)
+                            accessToken = try! Json(data).accessToken.string
+                            parentUsername = try! Json(data).username.string
+                            loginSuccess = true
+                            isLoading = false
                         } catch {
                             print("Error")
                         }
@@ -52,15 +69,16 @@ struct LoginView: View {
                     }
                     .onError { error in
                         print("onError: \(error)")
+                        isLoading = false
                     }
                     .call()
             }) {
-                Text("LOGIN")
+                Text(isLoading ? "LOADING..." :  "LOGIN")
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding()
                     .frame(width: 220, height: 60)
-                    .background(Color.blue)
+                    .background(loginSuccess ? Color.green : Color.blue)
                     .cornerRadius(15.0)
             }
             Text("\(username)")
@@ -70,8 +88,8 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+//struct LoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        // LoginView(accessToken: nil, parentUsername: nil)
+//    }
+//}

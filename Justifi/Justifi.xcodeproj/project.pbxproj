@@ -26,10 +26,13 @@
 		1E9C37D925BCB4B800C7F262 /* CameraManager in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37D825BCB4B800C7F262 /* CameraManager */; };
 		1E9C37DE25BCE39800C7F262 /* Json in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37DD25BCE39800C7F262 /* Json */; };
 		1E9C37E025BCE39800C7F262 /* Request in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37DF25BCE39800C7F262 /* Request */; };
+		1E9C37E625BD0EE600C7F262 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37E525BD0EE600C7F262 /* AccountView.swift */; };
+		1E9C37E725BD0EE600C7F262 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37E525BD0EE600C7F262 /* AccountView.swift */; };
+		1E9C37EB25BD1D7000C7F262 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37EA25BD1D7000C7F262 /* PostView.swift */; };
+		1E9C37EC25BD1D7000C7F262 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37EA25BD1D7000C7F262 /* PostView.swift */; };
+		1E9C37F325BD360F00C7F262 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37F225BD360F00C7F262 /* Alamofire */; };
 		42CFEADE25BBDCAC0040C1B4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */; };
 		42CFEADF25BBDCAC0040C1B4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */; };
-		42CFEAE325BBE7C80040C1B4 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEAE225BBE7C80040C1B4 /* RecordView.swift */; };
-		42CFEAE425BBE7C80040C1B4 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEAE225BBE7C80040C1B4 /* RecordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,8 +48,9 @@
 		1E9C37BA25BC7DDD00C7F262 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		1E9C37C625BCA99200C7F262 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		1E9C37CB25BCB1C700C7F262 /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
+		1E9C37E525BD0EE600C7F262 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		1E9C37EA25BD1D7000C7F262 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		42CFEAE225BBE7C80040C1B4 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,7 @@
 				1E9C37C325BCA69F00C7F262 /* URLImage in Frameworks */,
 				1E9C37E025BCE39800C7F262 /* Request in Frameworks */,
 				1E9C37D925BCB4B800C7F262 /* CameraManager in Frameworks */,
+				1E9C37F325BD360F00C7F262 /* Alamofire in Frameworks */,
 				1E9C37DE25BCE39800C7F262 /* Json in Frameworks */,
 				1E9C37B225BC76F400C7F262 /* SwiftUIPager in Frameworks */,
 			);
@@ -89,11 +94,12 @@
 				1E9C378725BBC17800C7F262 /* ContentView.swift */,
 				1E9C37BA25BC7DDD00C7F262 /* VideoView.swift */,
 				1E9C37CB25BCB1C700C7F262 /* RecorderView.swift */,
+				1E9C37EA25BD1D7000C7F262 /* PostView.swift */,
 				1E9C37B525BC771F00C7F262 /* ScrollView.swift */,
 				1E9C37C625BCA99200C7F262 /* NavigationView.swift */,
+				1E9C37E525BD0EE600C7F262 /* AccountView.swift */,
 				1E9C378825BBC17900C7F262 /* Assets.xcassets */,
 				42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */,
-				42CFEAE225BBE7C80040C1B4 /* RecordView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -146,6 +152,7 @@
 				1E9C37D825BCB4B800C7F262 /* CameraManager */,
 				1E9C37DD25BCE39800C7F262 /* Json */,
 				1E9C37DF25BCE39800C7F262 /* Request */,
+				1E9C37F225BD360F00C7F262 /* Alamofire */,
 			);
 			productName = "Justifi (iOS)";
 			productReference = 1E9C378D25BBC17900C7F262 /* Justifi.app */;
@@ -199,6 +206,7 @@
 				1E9C37C125BCA69F00C7F262 /* XCRemoteSwiftPackageReference "url-image" */,
 				1E9C37D725BCB4B800C7F262 /* XCRemoteSwiftPackageReference "CameraManager" */,
 				1E9C37DC25BCE39700C7F262 /* XCRemoteSwiftPackageReference "swift-request" */,
+				1E9C37F125BD360F00C7F262 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 1E9C378E25BBC17900C7F262 /* Products */;
 			projectDirPath = "";
@@ -238,9 +246,10 @@
 				42CFEADE25BBDCAC0040C1B4 /* LoginView.swift in Sources */,
 				1E9C37BB25BC7DDD00C7F262 /* VideoView.swift in Sources */,
 				1E9C379B25BBC17900C7F262 /* ContentView.swift in Sources */,
-				42CFEAE325BBE7C80040C1B4 /* RecordView.swift in Sources */,
 				1E9C379925BBC17900C7F262 /* JustifiApp.swift in Sources */,
+				1E9C37E625BD0EE600C7F262 /* AccountView.swift in Sources */,
 				1E9C37CC25BCB1C700C7F262 /* RecorderView.swift in Sources */,
+				1E9C37EB25BD1D7000C7F262 /* PostView.swift in Sources */,
 				1E9C37B625BC771F00C7F262 /* ScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,9 +262,10 @@
 				42CFEADF25BBDCAC0040C1B4 /* LoginView.swift in Sources */,
 				1E9C37BC25BC7DDD00C7F262 /* VideoView.swift in Sources */,
 				1E9C379C25BBC17900C7F262 /* ContentView.swift in Sources */,
-				42CFEAE425BBE7C80040C1B4 /* RecordView.swift in Sources */,
 				1E9C379A25BBC17900C7F262 /* JustifiApp.swift in Sources */,
+				1E9C37E725BD0EE600C7F262 /* AccountView.swift in Sources */,
 				1E9C37CD25BCB1C700C7F262 /* RecorderView.swift in Sources */,
+				1E9C37EC25BD1D7000C7F262 /* PostView.swift in Sources */,
 				1E9C37B725BC771F00C7F262 /* ScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +542,14 @@
 				minimumVersion = 1.3.0;
 			};
 		};
+		1E9C37F125BD360F00C7F262 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -559,6 +577,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1E9C37DC25BCE39700C7F262 /* XCRemoteSwiftPackageReference "swift-request" */;
 			productName = Request;
+		};
+		1E9C37F225BD360F00C7F262 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E9C37F125BD360F00C7F262 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

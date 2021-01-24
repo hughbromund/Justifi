@@ -5,6 +5,9 @@
 //  Created by Hugh Bromund on 1/22/21.
 //
 
+import Request
+typealias RequestForm = Form
+
 import SwiftUI
 
 @main

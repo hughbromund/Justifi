@@ -7,7 +7,11 @@
 
 import SwiftUI
 
+var DEFAULT_TOKEN = "NONE"
+
 struct NavigationView: View {
+    @State var accessToken: String = DEFAULT_TOKEN
+    @State var username: String = DEFAULT_TOKEN
     
     var body: some View {
         TabView() {
@@ -15,13 +19,20 @@ struct NavigationView: View {
                 Image(systemName: "house")
                 Text("Home")
             }
-            RecorderView().tabItem {
+            RecorderView(postUsername: $username, accessToken: $accessToken).tabItem {
                 Image(systemName: "plus.app.fill")
                 Text("Upload")
             }
-            LoginView().tabItem {
-                Image(systemName: "person")
-                Text("Account")
+            if (accessToken == DEFAULT_TOKEN) {
+                LoginView(accessToken: $accessToken, parentUsername: $username).tabItem {
+                    Image(systemName: "person")
+                    Text("Account")
+                }
+            } else {
+                AccountView().tabItem {
+                    Image(systemName: "person")
+                    Text("Account")
+                }
             }
         }
     }
