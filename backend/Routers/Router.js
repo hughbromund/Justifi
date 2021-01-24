@@ -30,6 +30,7 @@ router.get("/api/video/uploadURL", authJwt.verifyToken, videoController.uploadVi
 router.post("/api/video/uploadData", authJwt.verifyToken, videoController.uploadVideoData);
 router.post("/api/video/likeVideo", authJwt.verifyToken, videoController.likeVideo);
 router.post("/api/video/unlikeVideo", authJwt.verifyToken, videoController.unlikeVideo);
+router.post("/api/video/updatefeed", authJwt.verifyToken, videoController.calculateVideoList);
 
 
 router.post("/api/auth/signup", verifySignUp.checkDuplicateUsername, userController.signup);

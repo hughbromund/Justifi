@@ -116,6 +116,24 @@ exports.uploadVideoData = async function (req) {
         })
     }
 
+    const categorizeResult = await got.post('https://us-central1-jusifi.cloudfunctions.net/post_categorize', {
+        json: {
+            "uid": uid,
+            "url": url
+        },
+        responseType: 'json',
+        resolveBodyOnly: true
+    })
+
+    const toxicResult = await got.post('https://us-central1-jusifi.cloudfunctions.net/post_toxicity', {
+        json: {
+            "uid": uid,
+            "url": url
+        },
+        responseType: 'json',
+        resolveBodyOnly: true
+    })
+
     return { message: "Video information saved successfully!" };
 }
 
@@ -144,5 +162,28 @@ exports.unlikeVideo = async function (req) {
 }
 
 exports.calculateVideoList = async function (req) {
-    
+    let user = await Users.findOne({_id: req.userId})
+
+    let date = new Date();
+    date.setDate(date.getDay() - 1)
+
+    let videoList = await Videos.findAll({date: { "$gte" : date.toISOString}, isViewable: true, isOriginal: true})
+
+    for (var i = 0; i < videoList.length; i++) {
+        var score = videoList[i].upvotes * (user.interests[videoList[i].tag] / (user.numUpvotes + 28));
+        videoList[i].score = score;
+    }
+    //create score for each
+
+    videoList.sort((a, b) => (a.score > b.score) ? 1 : -1)
+
+    let finalList = []
+    for (var i = 0; i < videoList.length; i++) {
+        finalList.push(videoList[i].uri)
+    }
+
+    let result = await Users.UpdateOne({_id: req.userId}, {feed: finalList})
+
+    return { message: "Feed Calculation Complete"}
+
 }

@@ -34,3 +34,8 @@ exports.unlikeVideo = async function (req, res, next) {
     let result = await VideoService.unlikeVideo(req);
     res.status(200).json(result);
 }
+
+exports.calculateVideoList = async function (req, res, next) {
+    let result = await VideoService.calculateVideoList(req);
+    res.status(200).json(result);
+}
