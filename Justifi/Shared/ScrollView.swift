@@ -57,7 +57,12 @@ struct ScrollView: View {
                   content: { index in
                       // create a page based on the data passed
                     ZStack {
-                        VideoView(index: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: index.currentIndex)
+                        
+                 
+                        CommentView(videoInfo: index, curIndex: index.index, accessToken: $accessToken)
+                        // Rectangle()
+                        
+                        // VideoView(index: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: index.currentIndex)
                     }
                     .cornerRadius(5)
                     .shadow(radius: 5)
@@ -71,6 +76,7 @@ struct ScrollView: View {
                     curIndex = page
                     print("Page changed to: \(page)")})
                 .contentLoadingPolicy(.lazy(recyclingRatio: 5))
+                .swipeInteractionArea(.allAvailable)
             VStack {
                 HStack {
                     Text("Justifi").font(.largeTitle).bold().padding()

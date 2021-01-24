@@ -33,6 +33,8 @@
 		1E9C37F325BD360F00C7F262 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9C37F225BD360F00C7F262 /* Alamofire */; };
 		1E9C37F725BD722600C7F262 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37F625BD722600C7F262 /* CommentView.swift */; };
 		1E9C37F825BD722700C7F262 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9C37F625BD722600C7F262 /* CommentView.swift */; };
+		1E9C37FC25BD7AEC00C7F262 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E9C37FB25BD7AEC00C7F262 /* Launch Screen.storyboard */; };
+		1E9C37FD25BD7AEC00C7F262 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E9C37FB25BD7AEC00C7F262 /* Launch Screen.storyboard */; };
 		42CFEADE25BBDCAC0040C1B4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */; };
 		42CFEADF25BBDCAC0040C1B4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */; };
 /* End PBXBuildFile section */
@@ -53,6 +55,7 @@
 		1E9C37E525BD0EE600C7F262 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		1E9C37EA25BD1D7000C7F262 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		1E9C37F625BD722600C7F262 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
+		1E9C37FB25BD7AEC00C7F262 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		42CFEADD25BBDCAC0040C1B4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +103,7 @@
 				1E9C37EA25BD1D7000C7F262 /* PostView.swift */,
 				1E9C37B525BC771F00C7F262 /* ScrollView.swift */,
 				1E9C37F625BD722600C7F262 /* CommentView.swift */,
+				1E9C37FB25BD7AEC00C7F262 /* Launch Screen.storyboard */,
 				1E9C37C625BCA99200C7F262 /* NavigationView.swift */,
 				1E9C37E525BD0EE600C7F262 /* AccountView.swift */,
 				1E9C378825BBC17900C7F262 /* Assets.xcassets */,
@@ -227,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E9C37FC25BD7AEC00C7F262 /* Launch Screen.storyboard in Resources */,
 				1E9C379D25BBC17900C7F262 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E9C37FD25BD7AEC00C7F262 /* Launch Screen.storyboard in Resources */,
 				1E9C379E25BBC17900C7F262 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
