@@ -14,6 +14,10 @@ struct RecorderView: View {
     @Binding var postUsername : String
     @Binding  var accessToken: String
     
+    @Binding var commentUploadSheet : Bool
+    
+    var commentVideoUID : String
+    
     
     @State var cameraManager: CameraManager?
     @State var capturedImage: UIImage?
@@ -68,7 +72,7 @@ struct RecorderView: View {
                                     isRecording = true
                                 }
                             }.sheet(isPresented: $showUpload, content: {
-                                PostView(postURL: $uploadURL, postUsername: $postUsername, accessToken: $accessToken, showUpload: $showUpload)
+                                PostView(postURL: $uploadURL, postUsername: $postUsername, accessToken: $accessToken, showUpload: $showUpload, commentUploadSheet: $commentUploadSheet, commentVideoUID: commentVideoUID)
                             })
                             .padding()
                 }
@@ -167,8 +171,9 @@ struct CameraView : UIViewControllerRepresentable {
 struct RecorderView_Previews: PreviewProvider {
     @State static var tempUsername : String = "HughBromund"
     @State static var tempToken : String = "HughBromund"
+    @State static var tempBool : Bool = false
     
     static var previews: some View {
-        RecorderView(postUsername: $tempUsername, accessToken: $tempToken)
+        RecorderView(postUsername: $tempUsername, accessToken: $tempToken, commentUploadSheet: $tempBool, commentVideoUID: "hello")
     }
 }

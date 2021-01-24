@@ -40,6 +40,7 @@ struct VideoInfo : Hashable, Equatable {
 struct ScrollView: View {
     
     @Binding var accessToken: String
+    @Binding var postUsername: String
     
     @StateObject var page: Page = .first()
     
@@ -59,7 +60,7 @@ struct ScrollView: View {
                     ZStack {
                         
                  
-                        CommentView(videoInfo: index, curIndex: $curIndex, accessToken: $accessToken)
+                        CommentView(videoInfo: index, curIndex: $curIndex, accessToken: $accessToken, postUsername: $postUsername)
                         // Rectangle()
                         
                         // VideoView(index: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, currentIndex: index.currentIndex)
@@ -149,7 +150,8 @@ struct ScrollView: View {
 struct ScrollView_Previews: PreviewProvider {
     @State static var tempToken : String = "HughBromund"
     
+    
     static var previews: some View {
-        ScrollView(accessToken: $tempToken)
+        ScrollView(accessToken: $tempToken, postUsername: $tempToken)
     }
 }

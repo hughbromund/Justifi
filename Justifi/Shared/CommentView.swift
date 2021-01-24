@@ -22,6 +22,7 @@ struct CommentView: View {
     @State private var commentVideos : [VideoInfo] = [VideoInfo]()
     
     @Binding var accessToken: String
+    @Binding var postUsername: String
     
     @StateObject private var page: Page = .first()
     
@@ -42,7 +43,7 @@ struct CommentView: View {
 //                        Text("HEllo There")
 //                    }
                     ZStack {
-                        VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, videoTitle: index.title, videoUsername: index.username, videoUID: index.uid, accessToken: $accessToken, currentIndex: $curIndex, curRowIndex: $curRowIndex)
+                        VideoView(index: videoInfo.index, rowIndex: index.index, videoURL: index.url, thumbnailURL: index.thumbnail, videoTitle: index.title, videoUsername: index.username, videoUID: index.uid, accessToken: $accessToken, postUsername: $postUsername, currentIndex: $curIndex, curRowIndex: $curRowIndex)
                     }
                     
                     .cornerRadius(5)

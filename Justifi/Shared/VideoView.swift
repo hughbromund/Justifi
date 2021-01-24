@@ -48,6 +48,7 @@ struct VideoView: View {
     var videoUID : String
     
     @Binding var accessToken : String
+    @Binding var postUsername : String
     
     @State private var isLiked = false
     
@@ -59,6 +60,8 @@ struct VideoView: View {
     
     @Binding var currentIndex : Int
     @Binding var curRowIndex : Int
+    
+    @State var showUpload : Bool = false
     
 //    static func == (lhs: VideoView, rhs: VideoView) -> Bool {
 //        return ((lhs.pageNum - rhs.pageNum) != 0)
@@ -148,6 +151,18 @@ struct VideoView: View {
                 Spacer()
                 Spacer()
                 HStack {
+                    Spacer()
+                    Button(action: {
+                        print("Adding a Comment")
+                        showUpload.toggle()
+                    }, label: {
+                        Image(systemName: "plus.bubble")
+                            .font(.title)
+                            .padding()
+                            .foregroundColor(.white)
+                    })
+                }
+                HStack {
                     Text(videoTitle)
                         .font(.title)
                         .foregroundColor(.white)
@@ -201,11 +216,11 @@ struct VideoView: View {
                         .padding(.leading, 15)
                         .padding(.bottom, 10)
                     Spacer()
-                    Image(systemName: "plus.bubble")
-                        .font(.title2)
-                        .padding()
-                        .foregroundColor(.white)
-                }
+          
+                }.sheet(isPresented: $showUpload, content: {
+                    
+                    RecorderView(postUsername: $postUsername, accessToken: $accessToken, commentUploadSheet: $showUpload, commentVideoUID: videoUID)
+                })
                 Spacer()
             }
 

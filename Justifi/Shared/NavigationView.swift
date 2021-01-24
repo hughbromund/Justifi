@@ -13,13 +13,15 @@ struct NavigationView: View {
     @State var accessToken: String = DEFAULT_TOKEN
     @State var username: String = DEFAULT_TOKEN
     
+    @State var tempBool : Bool = false
+    
     var body: some View {
         TabView() {
-            ScrollView(accessToken: $accessToken).tabItem {
+            ScrollView(accessToken: $accessToken, postUsername: $username).tabItem {
                 Image(systemName: "house")
                 Text("Home")
             }
-            RecorderView(postUsername: $username, accessToken: $accessToken).tabItem {
+            RecorderView(postUsername: $username, accessToken: $accessToken, commentUploadSheet: $tempBool, commentVideoUID: "NONE").tabItem {
                 Image(systemName: "plus.app.fill")
                 Text("Upload")
             }
